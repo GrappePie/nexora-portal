@@ -16,3 +16,6 @@ coverage/
 .env*
 .vercel/
 .DS_Store
+
+# IDEs
+.idea/
