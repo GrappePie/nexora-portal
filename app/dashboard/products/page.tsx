@@ -1,0 +1,1 @@
+export default function Products(){return <main style={{padding:24}}><h1>Productos</h1><p>Nexora POS Taller — Activo</p></main>}
