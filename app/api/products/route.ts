@@ -1,20 +1,6 @@
 import { NextResponse } from 'next/server'
 import { verifyToken } from '../../../lib/auth/token'
-
-const plans = [
-  {
-    id: 'basic',
-    name: 'Basic',
-    price: 10,
-    benefits: ['Característica A'],
-  },
-  {
-    id: 'pro',
-    name: 'Pro',
-    price: 20,
-    benefits: ['Característica A', 'Característica B'],
-  },
-]
+import { listProducts } from '../../../lib/products'
 
 export async function GET(req: Request) {
   const auth = req.headers.get('authorization')
@@ -27,5 +13,5 @@ export async function GET(req: Request) {
   } catch {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }
-  return NextResponse.json(plans)
+  return NextResponse.json(listProducts())
 }
