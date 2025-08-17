@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -12,6 +12,9 @@ interface Plan {
 
 function SubsContent() {
   const [plans, setPlans] = useState<Plan[]>([])
+  const [subscription, setSubscription] = useState<{ planId: string } | null>(
+    null,
+  )
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [message, setMessage] = useState<string | null>(null)
@@ -33,51 +36,39 @@ function SubsContent() {
       const data = (await res.json()) as Plan[]
       setPlans(data)
     } catch (err: unknown) {
-      const message =
-        err instanceof Error ? err.message : 'Error desconocido'
+      const message = err instanceof Error ? err.message : 'Error desconocido'
       setError(message)
     } finally {
       setLoading(false)
     }
   }
 
+  async function fetchSubscription() {
+    try {
+      const token = localStorage.getItem('token')
+      const res = await fetch('/api/subscriptions', {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      })
+      if (res.ok) {
+        const data = (await res.json()) as { planId: string } | null
+        setSubscription(data)
+      }
+    } catch {
+      /* ignore */
+    }
+  }
+
   useEffect(() => {
     fetchPlans()
+    fetchSubscription()
   }, [])
 
   useEffect(() => {
     const status = searchParams.get('status')
     if (status === 'success') {
-      const planId =
-        searchParams.get('planId') || localStorage.getItem('selectedPlan')
-      if (planId) {
-        const confirm = async () => {
-          try {
-            setLoading(true)
-            const token = localStorage.getItem('token')
-            const res = await fetch('/api/subscriptions', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                ...(token ? { Authorization: `Bearer ${token}` } : {}),
-              },
-              body: JSON.stringify({ planId }),
-            })
-            if (!res.ok) {
-              throw new Error('Error al confirmar suscripción')
-            }
-            setMessage('Suscripción completada')
-            await fetchPlans()
-          } catch (err) {
-            setError('No se pudo confirmar la suscripción')
-          } finally {
-            setLoading(false)
-            localStorage.removeItem('selectedPlan')
-            router.replace('/dashboard/subscriptions')
-          }
-        }
-        confirm()
-      }
+      setMessage('Suscripción completada')
+      fetchSubscription()
+      router.replace('/dashboard/subscriptions')
     } else if (status === 'cancel') {
       setError('Pago cancelado')
       router.replace('/dashboard/subscriptions')
@@ -100,7 +91,6 @@ function SubsContent() {
         throw new Error('Error al iniciar el pago')
       }
       const data = (await res.json()) as { url: string }
-      localStorage.setItem('selectedPlan', planId)
       window.location.href = data.url
     } catch (err) {
       setError('No se pudo iniciar el pago')
@@ -121,14 +111,15 @@ function SubsContent() {
           >
             <h2>{plan.name}</h2>
             <p>Precio: ${plan.price}</p>
+            {subscription?.planId === plan.id && (
+              <p style={{ color: 'green' }}>Plan actual</p>
+            )}
             <ul>
               {plan.benefits.map((b) => (
                 <li key={b}>{b}</li>
               ))}
             </ul>
-            <button onClick={() => handleSelect(plan.id)}>
-              Seleccionar
-            </button>
+            <button onClick={() => handleSelect(plan.id)}>Seleccionar</button>
           </div>
         ))}
       </div>
