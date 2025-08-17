@@ -3,7 +3,7 @@ export default function Head() {
   return (
     <>
       {/* SVG favicon */}
-      <link rel="icon" type="image/svg+xml" href="/logo-nexora-pos.svg" />
+      <link rel="icon" type="image/svg+xml" href="/logo-nexora-symbol.svg" />
 
       {/* PNG fallbacks for older browsers */}
       <link

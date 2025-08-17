@@ -1,3 +1,4 @@
+import '../styles/globals.css'
 import LogoutButton from '../components/LogoutButton'
 import SWRegister from './sw-register'
 
@@ -15,17 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body style={{ fontFamily: 'Inter,system-ui', margin: 0 }}>
+      <body className="font-sans">
         <SWRegister />
-        <header
-          style={{
-            backgroundColor: '#111827',
-            color: '#fff',
-            padding: '8px 16px',
-            display: 'flex',
-            justifyContent: 'flex-end',
-          }}
-        >
+        <header className="bg-dark text-white py-2 px-4 flex items-center justify-between">
+          <img src="/logo-nexora-pos.svg" alt="Nexora" className="h-8" />
           <LogoutButton />
         </header>
         {children}
