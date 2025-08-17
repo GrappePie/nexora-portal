@@ -12,6 +12,15 @@ export default function Dashboard() {
         <li>
           <a href="/dashboard/installation">Instalación</a>
         </li>
+        <li>
+          <a href="/dashboard/devices">Dispositivos</a>
+        </li>
+        <li>
+          <a href="/dashboard/users">Usuarios</a>
+        </li>
+        <li>
+          <a href="/dashboard/support">Soporte</a>
+        </li>
       </ul>
     </main>
   )
