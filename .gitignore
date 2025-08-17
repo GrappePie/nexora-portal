@@ -12,6 +12,13 @@ yarn-error.log*
 .pnpm-debug.log*
 coverage/
 
+# Backend database files
+*.db
+
+# Python cache
+__pycache__/
+*.pyc
+
 # Env y config locales
 .env*
 !.env.example
