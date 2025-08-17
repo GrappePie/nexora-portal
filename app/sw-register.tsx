@@ -6,6 +6,12 @@ interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>
 }
 
+// Añadimos una definición mínima para SyncManager para que TypeScript
+// conozca el método register utilizado por Background Sync.
+interface SyncManager {
+  register: (tag: string) => Promise<void>
+}
+
 export default function SWRegister() {
   useEffect(() => {
     if ('serviceWorker' in navigator) {
@@ -13,11 +19,10 @@ export default function SWRegister() {
         .register('/sw.js')
         .then(() => {
           navigator.serviceWorker.ready.then((reg) => {
-            if ('sync' in reg) {
-              reg.sync
-                .register('sync-outbox')
-                .catch((err) => console.error('Sync registration failed', err))
-            }
+            const sync = (reg as ServiceWorkerRegistration & { sync?: SyncManager }).sync
+            sync?.register('sync-outbox').catch((err) =>
+              console.error('Sync registration failed', err)
+            )
           })
         })
         .catch((err) => console.error('SW registration failed', err))
