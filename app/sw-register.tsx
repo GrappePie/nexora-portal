@@ -11,6 +11,15 @@ export default function SWRegister() {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
         .register('/sw.js')
+        .then(() => {
+          navigator.serviceWorker.ready.then((reg) => {
+            if ('sync' in reg) {
+              reg.sync
+                .register('sync-outbox')
+                .catch((err) => console.error('Sync registration failed', err))
+            }
+          })
+        })
         .catch((err) => console.error('SW registration failed', err))
     }
 
@@ -30,4 +39,3 @@ export default function SWRegister() {
 
   return null
 }
-
