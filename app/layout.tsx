@@ -1,4 +1,5 @@
 import LogoutButton from '../components/LogoutButton'
+import SWRegister from './sw-register'
 
 export const metadata = {
   metadataBase: new URL(
@@ -15,6 +16,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body style={{ fontFamily: 'Inter,system-ui', margin: 0 }}>
+        <SWRegister />
         <header
           style={{
             backgroundColor: '#111827',
