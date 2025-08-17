@@ -13,8 +13,7 @@ export default function LoginPage() {
     setError(null)
     setLoading(true)
     try {
-      const token = await login(email, password)
-      localStorage.setItem('token', token)
+      await login(email, password)
       router.push('/dashboard')
     } catch (err) {
       setError('Credenciales inválidas')
