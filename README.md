@@ -2,6 +2,16 @@
 
 Mock: login, dashboard, productos, suscripciones, instalación con QR.
 
+## Configuración
+
+1. Copia el archivo de ejemplo y crea tu propio `.env`:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Edita `.env` y ajusta las credenciales de PostgreSQL, Redis, S3 y `JWT_SECRET` según tu entorno.
+
 ## Code quality
 
 Run the linter and formatter before committing:
