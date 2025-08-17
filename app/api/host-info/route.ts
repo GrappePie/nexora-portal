@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }
   try {
-    const payload = verifyToken(token)
+    const payload = await verifyToken(token)
     if (!hasPermission(payload.role as any, 'host-info')) {
       return NextResponse.json({ message: 'Forbidden' }, { status: 403 })
     }

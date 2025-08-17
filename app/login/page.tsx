@@ -13,7 +13,11 @@ export default function LoginPage() {
     setError(null)
     setLoading(true)
     try {
-      await login(email, password)
+      const token = await login(email, password)
+      // Persistir token para llamadas a APIs desde el cliente
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('token', token)
+      }
       router.push('/dashboard')
     } catch (err) {
       setError('Credenciales inválidas')

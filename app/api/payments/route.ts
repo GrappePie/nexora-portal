@@ -17,7 +17,7 @@ export async function POST(req: Request) {
   const token = auth.split(' ')[1]
   let payload
   try {
-    payload = verifyToken(token)
+    payload = await verifyToken(token)
   } catch {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }

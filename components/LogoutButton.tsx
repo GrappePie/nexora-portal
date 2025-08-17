@@ -10,8 +10,13 @@ export default function LogoutButton() {
       setHasToken(!!localStorage.getItem('token'))
     }
   }, [pathname])
-  const handleLogout = () => {
-    localStorage.removeItem('token')
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/logout', { method: 'POST' })
+    } catch {}
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token')
+    }
     router.push('/login')
   }
   if (!hasToken || pathname === '/login') return null

@@ -9,7 +9,7 @@ export async function GET(req: Request) {
   }
   const token = auth.split(' ')[1]
   try {
-    verifyToken(token)
+    await verifyToken(token)
   } catch {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }

@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import { verifyToken } from './lib/auth/token'
 import { hasPermission, Role } from './lib/auth/roles'
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const token = req.cookies.get('token')?.value
   if (!token) {
     return NextResponse.redirect(new URL('/login', req.url))
   }
   try {
-    const payload = verifyToken(token)
+    const payload = await verifyToken(token)
     if (!hasPermission(payload.role as Role, 'dashboard')) {
       return NextResponse.redirect(new URL('/login', req.url))
     }
