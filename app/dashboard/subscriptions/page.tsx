@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 interface Plan {
@@ -10,7 +10,7 @@ interface Plan {
   benefits: string[]
 }
 
-export default function Subs() {
+function SubsContent() {
   const [plans, setPlans] = useState<Plan[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -133,5 +133,13 @@ export default function Subs() {
         ))}
       </div>
     </main>
+  )
+}
+
+export default function Subs() {
+  return (
+    <Suspense fallback={<p>Cargando...</p>}>
+      <SubsContent />
+    </Suspense>
   )
 }
