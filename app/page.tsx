@@ -1,1 +1,8 @@
-export default function Home(){return <main style={{padding:24}}><h1>Nexora Portal</h1><a href='/dashboard'>Ir al Dashboard</a></main>}
+export default function Home() {
+  return (
+    <main style={{ padding: 24 }}>
+      <h1>Nexora Portal</h1>
+      <a href="/dashboard">Ir al Dashboard</a>
+    </main>
+  )
+}

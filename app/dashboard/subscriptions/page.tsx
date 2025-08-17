@@ -1,1 +1,8 @@
-export default function Subs(){return <main style={{padding:24}}><h1>Suscripciones</h1><p>Plan Pro (mock)</p></main>}
+export default function Subs() {
+  return (
+    <main style={{ padding: 24 }}>
+      <h1>Suscripciones</h1>
+      <p>Plan Pro (mock)</p>
+    </main>
+  )
+}
