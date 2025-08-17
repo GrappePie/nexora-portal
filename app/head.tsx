@@ -2,8 +2,8 @@
 export default function Head() {
   return (
     <>
-      {/* Modern SVG favicon (auto light/dark via CSS inside the SVG) */}
-      <link rel="icon" type="image/svg+xml" href="/favicon-auto.svg" />
+      {/* SVG favicon */}
+      <link rel="icon" type="image/svg+xml" href="/logo-nexora-pos.svg" />
 
       {/* PNG fallbacks for older browsers */}
       <link
