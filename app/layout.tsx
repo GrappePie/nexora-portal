@@ -1,3 +1,5 @@
+import LogoutButton from '../components/LogoutButton'
+
 export const metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000',
@@ -12,7 +14,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body style={{ fontFamily: 'Inter,system-ui' }}>{children}</body>
+      <body style={{ fontFamily: 'Inter,system-ui', margin: 0 }}>
+        <header
+          style={{
+            backgroundColor: '#111827',
+            color: '#fff',
+            padding: '8px 16px',
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <LogoutButton />
+        </header>
+        {children}
+      </body>
     </html>
   )
 }
