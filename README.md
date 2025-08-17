@@ -166,9 +166,17 @@ PUBLIC_BASE_LAN=http://taller.local:3000
 PUBLIC_BASE_EXTERNAL_HOST=https://aprobar.nexora.grappepie.com
 PUBLIC_BASE_EXTERNAL=https://aprobar.nexora.grappepie.com
 CF_TUNNEL_TOKEN=
+
+# Stripe (Portal/billing)
+STRIPE_SECRET_KEY=sk_test_xxx
+STRIPE_WEBHOOK_SECRET=whsec_xxx
+STRIPE_PRICE_BASIC=price_xxx_basic
+STRIPE_PRICE_PRO=price_xxx_pro
 ```
 
 > El **frontend** exporta `NEXT_PUBLIC_PUBLIC_BASE_LAN/EXTERNAL` para el botón **Compartir por WhatsApp**. Si no hay EXTERNAL, usa LAN.
+> En desarrollo con Next.js puedes usar `.env.local` para sobreescribir estas variables localmente.
+> El webhook de Stripe apunta a `/api/webhooks`; copia el secreto del dashboard en `STRIPE_WEBHOOK_SECRET`.
 
 ---
 
@@ -327,4 +335,3 @@ environment:
 
 - Portal: `https://app.nexora.grappepie.com` → sección **Soporte**.
 - Contacto inicial por email/WhatsApp (definir proveedor al pasar a prod).
-

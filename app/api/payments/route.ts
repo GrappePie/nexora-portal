@@ -2,10 +2,6 @@ import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { verifyToken } from '../../../lib/auth/token'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2024-04-10',
-})
-
 const priceMap: Record<string, string> = {
   basic: process.env.STRIPE_PRICE_BASIC || '',
   pro: process.env.STRIPE_PRICE_PRO || '',
@@ -31,6 +27,12 @@ export async function POST(req: Request) {
   if (!price) {
     return NextResponse.json({ message: 'Invalid plan' }, { status: 400 })
   }
+
+  const secret = process.env.STRIPE_SECRET_KEY
+  if (!secret) {
+    return NextResponse.json({ message: 'Stripe not configured' }, { status: 500 })
+  }
+  const stripe = new Stripe(secret)
 
   const origin = req.headers.get('origin') || 'http://localhost:3000'
   const session = await stripe.checkout.sessions.create({
